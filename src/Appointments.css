@@ -43,8 +43,9 @@ body, html {
   font-size: 18px;
   padding: 12px 20px;
   border-radius: 10px;
-  width: 160px;
+  width: 170px; 
   text-align: center;
+  box-sizing: border-box;
 }
 
 .date-controls button {
@@ -377,8 +378,11 @@ body, html {
   }
 
   .date-input {
-    width: 160px;
     font-size: 16px;
+    padding: 12px 20px;
+    border-radius: 10px;
+    width: 160px; 
+    text-align: center;
   }
 
   .table-header,

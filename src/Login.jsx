@@ -26,10 +26,13 @@ const Login = () => {
     setSuccess('');
 
     try {
-      // TODO: replace with your actual API call
+      const trimmedCredentials = {
+        username: credentials.username.trim(),
+        password: credentials.password.trim(),
+      };
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/login`,
-        credentials,
+        trimmedCredentials,
         { withCredentials: true }
       );
 
