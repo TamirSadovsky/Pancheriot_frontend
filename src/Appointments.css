@@ -1,0 +1,418 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+body, html {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  margin: 0;
+  padding: 0;
+  direction: rtl;
+  height: 100%;
+}
+
+
+.appointments-container {
+  background-color: #fff7f0;
+  max-width: 1100px;
+  margin: 80px auto;
+  padding: 40px;
+  border-radius: 35px;
+  box-shadow: 0 0 40px #f0e5da;
+  text-align: center;
+  color: #333;
+  font-family: 'Inter', sans-serif;
+}
+
+.appointments-container h2 {
+  color: #aa5d00;
+  font-size: 36px;
+  font-weight: 800;
+  margin-bottom: 30px;
+}
+
+.date-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 40px;
+  font-size: 20px;
+  flex-wrap: wrap;
+}
+
+.date-input {
+  font-size: 18px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  width: 160px;
+  text-align: center;
+}
+
+.date-controls button {
+  background: linear-gradient(145deg, #ffd9ba, #ffeeda);
+  color: #5a2c17;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+.date-controls button:hover {
+  transform: scale(1.05);
+}
+
+/* === Table === */
+.appointments-table {
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  overflow: hidden;
+}
+
+.table-header {
+  display: flex;
+  font-size: 16px;
+  font-weight: 500;
+  border-bottom: 1px solid #ddd;
+  min-height: 50px;
+  align-items: center;
+  background: #f4a261;
+  color: white;
+}
+
+.table-body {
+  display: flex;
+  flex-direction: column;
+  height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  direction: ltr; /* scrollbar right */
+  scrollbar-width: thin; /* Firefox */
+}
+
+.table-body::-webkit-scrollbar {
+  width: 4px;
+}
+
+.table-body::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.table-row {
+  display: flex;
+  min-height: 50px;
+  align-items: center;
+  width: 100%;
+  flex-shrink: 0;
+  background-color: #fff;
+}
+
+.table-body > .table-row {
+  direction: rtl;
+}
+
+.table-row:hover {
+  background: #ffe8d3;
+}
+
+.completed-row {
+  background-color: #c8f7c5 !important;
+}
+
+.empty-row {
+  background-color: #fff;
+  pointer-events: none;
+}
+
+.table-header div,
+.table-row div {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  font-size: 15px;
+}
+
+.table-header div:nth-child(1),
+.table-row div:nth-child(1) { flex: 0.8; }
+.table-header div:nth-child(2),
+.table-row div:nth-child(2) { flex: 0.8; }
+.table-header div:nth-child(3),
+.table-row div:nth-child(3) { flex: 1; }
+.table-header div:nth-child(4),
+.table-row div:nth-child(4) { flex: 1.2; }
+.table-header div:nth-child(5),
+.table-row div:nth-child(5) { flex: 1.5; }
+
+.cell {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.cell.expanded::after {
+  content: attr(data-full);
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: #fff;
+  font-size: 14px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+  z-index: 1000;
+}
+
+/* === Modal === */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-box,
+.details-modal-box {
+  background: #fffdf9;
+  border-radius: 20px;
+  padding: 48px 36px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+.modal-question {
+  font-size: 24px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 36px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+}
+
+.modal-buttons button {
+  padding: 14px 36px;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.25s ease-in-out;
+}
+
+.modal-buttons .yes {
+  background-color: #337a5b;
+  color: white;
+}
+
+.modal-buttons .no {
+  background-color: #b44646;
+  color: white;
+}
+
+/* === Signature Button === */
+.sign-button {
+  background: linear-gradient(135deg, #f4a261, #f3b88b);
+  color: white;
+  border: none;
+  padding: 18px;
+  font-size: 22px;
+  font-weight: bold;
+  border-radius: 50px;
+  margin-top: 30px;
+  cursor: pointer;
+  width: 85%;
+  transition: all 0.3s ease-in-out;
+}
+
+.sign-button:hover {
+  background: linear-gradient(135deg, #e38b3d, #f0a46a);
+  transform: translateY(-2px);
+}
+
+/* === Details Modal Form === */
+.details-modal-box {
+  background: #fffefb;
+  border-radius: 24px;
+  padding: 0;
+  height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 440px;
+  direction: rtl;
+}
+
+.details-modal-header {
+  width: 100%;
+  background: #fff7f0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #aa5d00;
+  text-align: center;
+  padding: 20px;
+  border-bottom: 2px solid #f4a261;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.details-modal-box h3 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 24px;
+  margin-top: 10px;
+}
+
+.details-form-wrapper {
+  flex: 1;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  direction: ltr; /* <-- THIS */
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+}
+
+
+.details-form-wrapper::-webkit-scrollbar {
+  width: 6px;
+}
+
+.details-form-wrapper::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.details-form {
+  flex: 1;
+  width: 100%;
+  writing-mode: horizontal-tb; /* כתיבה רגילה */
+  direction: rtl;
+  text-align: right;
+  padding: 24px 16px;
+}
+
+.details-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 22px;
+}
+
+.details-row label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.details-row input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  background: #f8f8f8;
+  color: #222;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* === Add Action Button === */
+.add-work-button {
+  background: #fdf3e7;
+  border: 2px dashed #f4a261;
+  border-radius: 16px;
+  padding: 14px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #aa5d00;
+  cursor: pointer;
+  width: 85%;
+  margin-top: 20px;
+  transition: 0.3s ease-in-out;
+}
+
+.add-work-button:hover {
+  background: #ffe8d3;
+  border-color: #e38b3d;
+}
+
+/* === Mobile Adjustments === */
+@media (max-width: 600px) {
+  .appointments-container {
+    padding: 20px 10px;
+  }
+
+  .appointments-container h2 {
+    font-size: 26px;
+  }
+
+  .date-input {
+    width: 160px;
+    font-size: 16px;
+  }
+
+  .table-header,
+  .table-row {
+    font-size: 13px;
+    min-height: 48px;
+  }
+
+  .table-header div,
+  .table-row div {
+    font-size: clamp(10px, 3vw, 13px);
+    padding: 6px 2px;
+  }
+
+  .details-modal-box {
+    padding: 24px 16px;
+  }
+
+  .details-row input {
+    font-size: 15px;
+    padding: 12px;
+  }
+
+  .details-row label {
+    font-size: 15px;
+  }
+
+  .sign-button {
+    font-size: 20px;
+    padding: 14px 0;
+  }
+
+  .add-work-button {
+    font-size: 16px;
+    padding: 12px;
+  }
+}
